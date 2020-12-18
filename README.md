@@ -1,12 +1,12 @@
-## Welcome to GitHub Pages
+## Welcome to my R Portfolio
 
-You can use the [editor on GitHub](https://github.com/cmcerlean1/cmcerlean1.github.io/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
+# Hi, my name is Cara and this is my work on R and R Studio
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+I am from Hershey, PA (land of chocolate and cows) and currently located in Washington D.C. I am in my last year of undergrad at the George Washington University studying Theatre and Journalism, with a focus on directing and producing stories in a dynamic and compelling way. I am currently working on a thesis performance that examines human's relationships with artificial intelligence. In my free time you can find me doting on my pet cats, reviewing movies on Letterboxd, or looking for good vegetarian food in D.C. 
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### My R Portfolio 
+
 
 ```markdown
 Syntax highlighted code block
