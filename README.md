@@ -11,7 +11,7 @@ I am from Hershey, PA (land of chocolate and cows) and currently located in Wash
 
 This assignment analyzes the data on House Democrats' opinions and behaviors regarding Trump's impeachment.
 
-Click here to access that code and finished product.
+Click [HERE](file:///Users/caramcerlean/Downloads/Cara-McErlean-HW.html) to access that code and finished product.
 
 ### RECENT ASSIGNMENT: Biden Transition
 
