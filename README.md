@@ -1,11 +1,24 @@
-## Welcome to my R Portfolio
+# Welcome to my R Portfolio
 
-# Hi, my name is Cara and this is my work on R and R Studio
+## Hi, my name is Cara
 
 I am from Hershey, PA (land of chocolate and cows) and currently located in Washington D.C. I am in my last year of undergrad at the George Washington University studying Theatre and Journalism, with a focus on directing and producing stories in a dynamic and compelling way. I am currently working on a thesis performance that examines human's relationships with artificial intelligence. In my free time you can find me doting on my pet cats, reviewing movies on Letterboxd, or looking for good vegetarian food in D.C. 
 
+## My R Portfolio 
 
-### My R Portfolio 
+
+### FIRST R ASSIGNMENT: Impeachment
+
+This assignment analyzes the data on House Democrats' opinions and behaviors regarding Trump's impeachment.
+
+Click here to access that code and finished product.
+
+### RECENT ASSIGNMENT: Biden Transition
+
+This assignment analyzes scrape information from Biden's White House staff member and agency appointees website to keep track of changes. 
+
+View product here.
+
 
 
 ```markdown
