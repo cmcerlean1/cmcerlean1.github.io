@@ -11,7 +11,7 @@ I am from Hershey, PA (land of chocolate and cows) and currently located in Wash
 
 This assignment analyzes the data on House Democrats' opinions and behaviors regarding Trump's impeachment.
 
-Click [HERE](https://github.com/cmcerlean1/cmcerlean1.github.io/blob/main/FirstRProject/HW%20MARKDOWN.fileloc) to access that code and finished product.
+Click [HERE] to access that code and finished product.
 
 ### Biden Transition Data
 
