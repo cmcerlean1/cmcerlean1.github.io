@@ -1,0 +1,164 @@
+---
+title: "GW Assignment - Biden Transition"
+author: "Cara McErlean"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(lubridate)
+library(janitor)
+library(scales)
+library(gt)
+library(kableExtra)
+library(plotly)
+
+options(dplyr.summarise.inform = FALSE)
+
+#run the script for step 03 to update the datasets to capture the current live verions
+#and load all the new dataset objects into the environment (you'll see them populate on the upper right window)
+source("03_compare_current_with_previous.R")
+
+
+```
+
+**Note: use either kable/kableExtra or gt tables to format your final tables for the questions below. You'll likely find it easier to figure out the data parts first, then once that's done add the table formatting.**
+
+# AGENCY TEAMS
+
+Come up with the necessary R code to return the following for the agency review teams.
+
+### *New Names*
+
+Below write code to show the new names added to the agency review team lists since the prior data provided.  
+  
+
+```{r, echo=FALSE}
+
+new_names <- anti_join(transition_data_current, transition_data_previous, by = "idstring")
+
+new_names 
+
+new_names %>% select(agency, name, team_lead, most_recent_employment) %>%
+  gt()%>%
+  tab_header(title= "New names") %>%
+  tab_options(table.align = "left") %>%  
+  cols_label(agency = "Agency",
+      name = "Name",
+      team_lead = "Team Lead",
+      most_recent_employment = "Most Recent Employment")
+
+```
+
+
+### *Aggregate Team Changes*
+
+Add data to show the total number of people appointed to each agency team, along with change since last time reflecting the number of new people added. Omit agencies with no change at all.  
+  
+
+```{r, echo=FALSE}
+
+agencycount_compare %>%
+  filter(change > 0)%>%
+  gt() %>%
+  tab_header(
+    title = "New Total of Appointees to Agency Teams") %>%
+    cols_label(
+      agency = "Agency",
+      current_count = "Current Count",
+      previous_count = "Previous Count",
+      change = "Change" )
+
+```
+
+
+### *Largest and Smallest Overall*
+
+Show the top 10 **largest** agency review teams as of today:
+
+```{r, echo=FALSE}
+
+agencycount_current %>% 
+     top_n(n = 10) %>%
+  select(agency, current_count) %>% arrange(desc(current_count)) %>%
+gt() %>%
+  tab_header(
+    title = "Top 10 Largest Agency Review Teams")
+
+
+
+```
+
+Show the top **smallest** agency review teams as of today - which we'll define here as less than five members:
+
+```{r, echo=FALSE}
+
+
+
+agencycount_current %>% 
+     filter (current_count < 5) %>%
+  select(agency, current_count) %>% arrange(desc(current_count)) %>%
+gt() %>%
+  tab_header(
+    title = "Smallest Agency Review Teams")
+ 
+
+```
+So the smallest agency review teams (less than 5 members) are:
+
+
+
+# WHITE HOUSE SENIOR STAFF
+
+Come up with the necessary R code to return the following for the WH senior staff.
+
+### *New Names*
+
+Below write code to show the new names added to the senior staff lists since the prior data provided.  
+  
+
+```{r, echo=FALSE}
+
+staff_data_current <- readRDS("processed_data/transition_data_scraped.rds")
+staff_data_current
+
+staff_data_previous <- readRDS("archived_data/transition_data_archived_2020_11_24t09_52.rds")
+staff_data_previous
+
+new_staffnames <- anti_join(staff_data_current, staff_data_previous, by = "idstring")
+
+new_staffnames
+
+new_staffnames%>%
+  gt() %>%
+  tab_header(
+    title = "New Names Added to Senior Staff") 
+
+
+```
+
+
+### *Total Number of Current vs. Previous*
+
+Add code to show the total number of people currently named to the WH senior staff, vs. the previous total number.  
+  
+
+```{r, echo=FALSE}
+
+
+#previous total number
+count(staff_data_previous)
+
+#current total number
+count(staff_data_current)
+
+#change in number of senior staff
+
+count(staff_data_current) - count(staff_data_previous)
+
+
+```
+

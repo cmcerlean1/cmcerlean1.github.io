@@ -1,0 +1,154 @@
+---
+title: "Biden Administration Agency Appointees"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(lubridate)
+library(janitor)
+library(scales)
+library(gt)
+library(kableExtra)
+library(plotly)
+
+#Include data
+source("01_scrape_agencyteams.R")
+source("02_scrape_nominees.R")
+source("03_compare_current_with_previous.R")
+staff_data_current <- readRDS("processed_data/transition_data_scraped.rds")
+staff_data_current
+
+staff_data_previous <- readRDS("archived_data/transition_data_archived_2020_11_24t09_52.rds")
+staff_data_previous
+
+new_staffnames <- anti_join(staff_data_current, staff_data_previous, by = "idstring")
+#load current staff data
+staff_data_scraped <- readRDS("processed_data/staff_data_scraped.rds")
+staff_data_scraped
+
+#load archived staff data to compare against 
+staff_data_previous <- readRDS("archived_data/staff_data_archived_2020_12_07t14_01.rds")
+staff_data_previous
+
+staff_data_current <- readRDS("processed_data/transition_data_scraped.rds")
+staff_data_current
+
+staff_data_previous <- readRDS("archived_data/transition_data_archived_2020_11_24t09_52.rds")
+staff_data_previous
+
+updated_staffnames <- anti_join(staff_data_current, staff_data_previous, by = "idstring")
+#committing files 
+saveRDS(new_staffnames, "processed_data/newstaffnames.rds")
+saveRDS(staffcount_compare, "processed_data/staffcountcompare.rds")
+
+seniorstaff <-staff_data_scraped
+saveRDS(seniorstaff, "processed_data/seniorstaff.rds")
+
+transition_data_current <- readRDS("processed_data/transition_data_scraped.rds")
+transition_data_current
+
+# load archived data to compare against
+transition_data_previous <- readRDS("archived_data/transition_data_archived_2020_11_24t09_52.rds")
+# transition_data_previous <- readRDS("archived_data/transition_data_archived_2020_11_25t09_34.rds")
+transition_data_previous
+
+#find new records of names added since previous
+new_names <- anti_join(transition_data_current, transition_data_previous, by = "idstring")
+agencycount_current <- transition_data_current %>% 
+  count(agency, name = "current_count")
+
+agencycount_current
+
+agencycount_previous <- transition_data_previous %>% 
+  count(agency, name = "previous_count")
+
+agencycount_previous
+
+#join
+agencycount_compare <- left_join(agencycount_current, agencycount_previous, by = "agency")
+agencycount_compare
+
+#add change columns
+agencycount_compare <- agencycount_compare %>% 
+  mutate(
+    change = current_count - previous_count
+  )
+
+
+#we'll create a NEW NAMED OBJECT to use from here on out for the full dataset
+agencyteams <- transition_data_current
+
+
+### SAVE results #### 
+
+#names of new agency review team members
+saveRDS(new_names , "processed_data/newnames.rds")
+#aggregate county of agency totals compared
+saveRDS(agencycount_compare, "processed_data/agencycount_compare.rds")
+#entire combined agency teams file
+saveRDS(agencyteams, "processed_data/agencyteams.rds")
+```
+
+Column {.tabset}
+-------------------------------------
+
+### Number of New Appointees
+
+```{r}
+agencycount_compare %>%
+  filter(change > 0)%>% arrange(
+    desc(current_count)) %>%
+  gt() %>%
+  tab_header(
+    title = "New Total of Appointees to Agency Teams") %>%
+    cols_label(
+      agency = "Agency",
+      current_count = "Current Count",
+      previous_count = "Previous Count",
+      change = "Change" )
+
+```
+
+
+### Names of New Appointees
+
+```{r}
+new_names %>% select(agency, name, team_lead, most_recent_employment) %>%
+  gt()%>%
+  tab_header(title = "New Additions to Agency Review Teams") %>%
+  tab_options(table.align = "left") %>%  
+  cols_label(agency = "Agency",
+      name = "Name",
+      team_lead = "Team Lead",
+      most_recent_employment = "Most Recent Employment")
+```
+
+
+### Largest And Smallest Agency Review Teams
+
+```{r}
+
+agencycount_current %>% 
+     top_n(n = 10) %>%
+  select(agency, current_count) %>% arrange(desc(current_count)) %>%
+gt() %>%
+  tab_header(
+    title = "Top 10 Largest Agency Review Teams")
+
+
+
+agencycount_current %>% 
+     filter (current_count < 5) %>%
+  select(agency, current_count) %>% arrange(desc(current_count)) %>%
+gt() %>%
+  tab_header(
+    title = "Smallest Agency Review Teams")
+ 
+
+```
+
