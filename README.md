@@ -17,7 +17,7 @@ Click [HERE](file:///Users/caramcerlean/Downloads/Cara-McErlean-HW.html) to acce
 
 This assignment analyzes scrape information from Biden's White House staff member and agency appointees website to keep track of changes. 
 
-View product here.
+View product [HERE](file:///Users/caramcerlean/GITSTUFF/gw_r_assignment_transition/04_assignmentfile_markdownreport.html)
 
 
 
